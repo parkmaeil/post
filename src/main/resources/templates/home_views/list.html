@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>게시물 목록</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="mb-4">Post List</h1>
+
+    <!-- 필터 폼 -->
+    <form action="/" method="get">
+        <!-- Use row and col classes for responsive layout -->
+        <div class="row mb-3">
+            <!-- Sort by -->
+            <div class="col-md-4 col-sm-12 mb-2">
+                <div class="form-group d-flex align-items-center">
+                    <label for="sort_by" class="mr-2 mb-0">Sort by:</label>
+                    <select class="form-control" id="sort_by" name="sort_by" style="width:100%;">
+                        <option value="createdAt" th:selected="${sort_by == 'createdAt'}">Created date</option>
+                        <option value="updatedAt" th:selected="${sort_by == 'updatedAt'}">Updated date</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Per page -->
+            <div class="col-md-4 col-sm-12 mb-2">
+                <div class="form-group d-flex align-items-center">
+                    <label for="per_page" class="mr-2 mb-0">Per page:</label>
+                    <select class="form-control" id="per_page" name="per_page" style="width:100%;">
+                        <option value="2" th:selected="${per_page == 2}">2</option>
+                        <option value="5" th:selected="${per_page == 5}">5</option>
+                        <option value="10" th:selected="${per_page == 10}">10</option>
+                        <option value="15" th:selected="${per_page == 15}">15</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Apply button -->
+            <div class="col-md-4 col-sm-12 mb-2">
+                <button class="btn btn-success w-100" type="submit">Apply Filter(s)</button>
+            </div>
+        </div>
+    </form>
+
+    <!-- 게시물 목록 -->
+    <div class="list-group mb-4">
+        <div th:each="post : ${posts.content}" class="mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <!-- 게시물 제목 -->
+                    <h4 class="card-title">
+                        <a th:href="@{'/posts/' + ${post.id}}" th:text="${post.title}">Title</a>
+                    </h4>
+
+                    <!-- Created at & Updated at -->
+                    <p class="text-muted">
+                        <small>
+                            <i class="fas fa-calendar-alt"></i>
+                            Created at: <span th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
+                        </small>
+                        <small class="ml-4">
+                            <i class="fas fa-calendar-alt"></i>
+                            Updated at: <span th:text="${#temporals.format(post.updatedAt, 'yyyy-MM-dd HH:mm')}"></span>
+                        </small>
+                    </p>
+
+                    <!-- 게시물 내용 -->
+                    <p class="card-text" th:text="${post.body}">Body</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 페이지 네비게이션 -->
+    <nav th:if="${links ne null}" aria-label="...">
+        <ul class="pagination justify-content-center">
+            <th:block th:each="link: ${links}">
+                <li class="page-item">
+                    <th:block th:utext="${link}">link</th:block>
+                </li>
+            </th:block>
+        </ul>
+    </nav>
+</div>
+
+<!-- Bootstrap JS, Popper.js, and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+</html>
