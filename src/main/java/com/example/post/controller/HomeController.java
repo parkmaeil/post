@@ -58,6 +58,12 @@ public class HomeController {
         }
         // 모델에 게시물과 페이지 링크 전달
         model.addAttribute("posts", postsOnPage);
+
         return "home_views/list";
+    }
+
+    @GetMapping("/books")
+    public String books(){
+        return "home_views/books"; // books.html(검색-->Kakao Book API)
     }
 }
