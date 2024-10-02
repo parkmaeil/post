@@ -18,7 +18,7 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String title;
+    private String title; // 256자
 
     @Column(columnDefinition = "TEXT")
     private String body;

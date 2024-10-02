@@ -31,15 +31,17 @@ public class HomeController {
         model.addAttribute("sort_by", sort_by);
         model.addAttribute("per_page", per_page);
 
-        // 페이징 처리된 게시물 가져오기
+        // 페이징 처리된 게시물 가져오기                                     7개->2개
         Page<Post> postsOnPage = postService.findAll(page - 1, per_page, sort_by);
+        //postsOnPage.getContent()
         int totalPages = postsOnPage.getTotalPages();
+        System.out.println("totalPages" + totalPages); // 자동계산->4
 
         // 페이지 번호 리스트 생성 [1, 2, 3, ...]
         List<Integer> pages = new ArrayList<>();
         if (totalPages > 0) {
             pages = IntStream
-                    .rangeClosed(0, totalPages - 1)
+                    .rangeClosed(0, totalPages - 1) // 0 1 2 3
                     .boxed()
                     .collect(Collectors.toList());
         }
