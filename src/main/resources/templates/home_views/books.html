@@ -18,8 +18,21 @@
                return response.json();
             })
            .then(data=>{
-              console.log(data); // 성공 ?
-              // 동적인 뷰 만들기....
+              //console.log(data); // 성공 ?
+              let bookList=document.getElementById("bookList");
+              let html="";
+             data.documents.forEach(book => {
+                  const {authors, title, price, isbn, publisher, thumbnail, url} = book;
+                  html += "<div class='card mb-4'>";
+                  html += "<div class='card-body'>";
+                  html += "<img src='" + thumbnail + "' alt='" + title + "' class='card-img-top' style='width: 150px; height: 200px;' />";  // 이미지 크기 조절
+                  html += "<h4 class='card-title'>" + title + "</h4>";
+                  html += "<p class='card-text'>" + price + "</p>";
+                  html += "</div>";
+                  html += "</div>";
+                });
+
+              bookList.innerHTML=html;
             })
            .catch(error=>{
                console.log(error);
@@ -48,15 +61,8 @@
     </form>
     <!-- 책 목록 -->
     <div class="list-group mb-4">
-        <div class="mb-4">
-            <div class="card">
-                <div class="card-body">
-                    <!-- 게시물 제목 -->
-                    <h4 class="card-title">Title</h4>
-                    <!-- 게시물 내용 -->
-                    <p class="card-text">Price</p>
-                </div>
-            </div>
+        <div class="mb-4" id="bookList">
+           <!-- 여기에 책 목록을 출력 -->
         </div>
     </div>
 </div>
