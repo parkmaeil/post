@@ -21,18 +21,17 @@
               //console.log(data); // 성공 ?
               let bookList=document.getElementById("bookList");
               let html="";
-             data.documents.forEach(book => {
+              data.documents.forEach(book => {
                   const {authors, title, price, isbn, publisher, thumbnail, url} = book;
                   html += "<div class='card mb-4'>";
                   html += "<div class='card-body'>";
                   html += "<img src='" + thumbnail + "' alt='" + title + "' class='card-img-top' style='width: 150px; height: 200px;' />";  // 이미지 크기 조절
-                  html += "<h4 class='card-title'>" + title + "</h4>";
+                  html += "<h4 class='card-title'><a href='"+url+"'>" + title + "</a></h4>";
                   html += "<p class='card-text'>" + price + "</p>";
                   html += "</div>";
                   html += "</div>";
-                });
-
-              bookList.innerHTML=html;
+              });
+             bookList.innerHTML=html;
             })
            .catch(error=>{
                console.log(error);
